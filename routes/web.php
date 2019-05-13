@@ -14,3 +14,20 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/Text/decode','TextController@decode');
+
+$router->post('/Text/efg','TextController@efg');
+
+$router->post('/Text/feiefg','TextController@feiefg');
+$router->post('/Text/yansign','TextController@yansign');
+
+
+$router->post('/User/regadd','UserController@regadd');
+
+//登录
+$router->get('/User/login','UserController@login');
+$router->post('/User/loginadd','UserController@loginadd');
+
+
+

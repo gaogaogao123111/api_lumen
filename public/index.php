@@ -12,7 +12,7 @@
 */
 
 $app = require __DIR__.'/../bootstrap/app.php';
-
+//echo "api_Lumen";
 /*
 |--------------------------------------------------------------------------
 | Run The Application
