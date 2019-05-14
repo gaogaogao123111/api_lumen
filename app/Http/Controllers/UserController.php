@@ -52,7 +52,7 @@ class UserController extends BaseController
             'pass'=>$password,
             'create_time'=>time()
         ];
-        $res = User::insertGetId($info);echo "<hr>";
+        $res = DB::table('user_api')->insert($info);echo "<hr>";
         if($res){
             echo "注册成功";
         }else{
