@@ -16,18 +16,16 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/Text/decode','TextController@decode');
-
 $router->post('/Text/efg','TextController@efg');
-
 $router->post('/Text/feiefg','TextController@feiefg');
 $router->post('/Text/yansign','TextController@yansign');
-
+//注册
 $router->post('/User/regadd','UserController@regadd');
-
 //登录
-$router->get('/User/login','UserController@login');
 $router->post('/User/loginadd','UserController@loginadd');
 
+$router->post('/User/appregadd','UserController@appregadd');
+$router->post('/User/apploginadd','UserController@apploginadd');
 
 $router->get('/Text/a','TextController@a');
 
