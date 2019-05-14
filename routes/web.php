@@ -22,12 +22,14 @@ $router->post('/Text/efg','TextController@efg');
 $router->post('/Text/feiefg','TextController@feiefg');
 $router->post('/Text/yansign','TextController@yansign');
 
-
 $router->post('/User/regadd','UserController@regadd');
 
 //登录
 $router->get('/User/login','UserController@login');
 $router->post('/User/loginadd','UserController@loginadd');
+
+
+$router->get('/Text/a','TextController@a');
 
 
 

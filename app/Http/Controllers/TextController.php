@@ -54,4 +54,12 @@ class TextController extends BaseController
 
     }
 
+
+    public function a(){
+        header('Access-Control-Allow-Origin:http://api.laravel.com');
+        print_r($_GET['callback']);
+    
+        return view('/User/a');
+    }
+
 }
