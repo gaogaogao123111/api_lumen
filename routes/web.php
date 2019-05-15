@@ -26,6 +26,11 @@ $router->post('/User/loginadd','UserController@loginadd');
 
 $router->post('/User/appregadd','UserController@appregadd');
 $router->post('/User/apploginadd','UserController@apploginadd');
+$router->post('/User/user',[
+    'as'=>'profile',
+    'uses'=>'UserController@user',
+    'middleware'=>'token'
+]);
 
 $router->get('/Text/a','TextController@a');
 

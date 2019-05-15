@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Location;
-use App\Model\User;
+use App\Model\User\User;
 class UserController extends BaseController
 {
    //注册
@@ -33,8 +33,8 @@ class UserController extends BaseController
 
     //app开发注册
     public function appregadd(Request $request){
-        header('Access-Control-Allow-Origin:*');
         $name=$request->input('name');
+//        echo $name;die;
         $email = $request->input('email');
         $password = $request->input('password');
         $a = DB::table('user_api')->where(['email'=>$email])->first();
@@ -52,16 +52,23 @@ class UserController extends BaseController
             'pass'=>$password,
             'create_time'=>time()
         ];
-        $res = DB::table('user_api')->insert($info);echo "<hr>";
+        $res = DB::table('user_api')->insert($info);
         if($res){
-            echo "注册成功";
+            $res = [
+                'errno'=>'0',
+                'msg'=>'OK'
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }else{
-            echo "注册失败";
+            $res = [
+                'errno'=>'40002',
+                'msg'=>'注册失败'
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }
     }
     //app开发登录
     public function apploginadd(Request $request){
-        header('Access-Control-Allow-Origin:*');
         $email = $request->input('email');
         $password = $request->input('password');
         $a = DB::table('user_api')->where(['email'=>$email])->first();
@@ -73,7 +80,8 @@ class UserController extends BaseController
                     'errno'=>'0',
                     'msg'=>'登录成功',
                     'data'=>[
-                        'token'=>$token
+                        'token'=>$token,
+                        'id'=>$a->id
                     ]
                 ];
                 $key = "login:ceshiapp:token:id".$a->id;
@@ -92,6 +100,27 @@ class UserController extends BaseController
             ];
         }
         die(json_encode($res,JSON_UNESCAPED_UNICODE));
+
+    }
+
+    public function user(){
+        $id =$_GET['id'];
+        $a = User::where(['id'=>$id])->first();
+        $a=json_encode($a);
+        if($a){
+            $res = [
+                'errno'=>'0',
+                'msg'=>'OK',
+                'data'=>$a
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }else{
+            $res = [
+                'errno'=>'50006',
+                'msg'=>'数据异常',
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }
 
     }
 }
