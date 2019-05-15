@@ -33,94 +33,74 @@ class UserController extends BaseController
 
     //app开发注册
     public function appregadd(Request $request){
-        $name=$request->input('name');
-//        echo $name;die;
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $a = DB::table('user_api')->where(['email'=>$email])->first();
-        if($a){
-            $res = [
-                'errno'=>'50002',
-                'msg'=>'email已存在'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
-        $password = password_hash($password,PASSWORD_BCRYPT);
-        $info = [
-            'name'=>$name,
-            'email'=>$email,
-            'pass'=>$password,
-            'create_time'=>time()
-        ];
-        $res = DB::table('user_api')->insert($info);
-        if($res){
-            $res = [
-                'errno'=>'0',
-                'msg'=>'OK'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }else{
-            $res = [
-                'errno'=>'40002',
-                'msg'=>'注册失败'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
+        $data=$request->input();
+        $method = 'aes-256-cbc';
+        $key = 'aaaa';
+        $option = OPENSSL_RAW_DATA;
+        $iv = '1809180918091809';
+        // 加密
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
+        $b64= base64_encode($encrypted);
+        $url = 'http://passport.1809.com/User/appregadd';
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$b64);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //发起请求
+        curl_exec($ch);
+        //检查错误码
+        curl_errno($ch);
+        //释放资源
+        curl_close($ch);
     }
     //app开发登录
     public function apploginadd(Request $request){
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $a = DB::table('user_api')->where(['email'=>$email])->first();
-//        var_dump($res);
-        if($a){
-            if(password_verify($password,$a->pass)){
-                $token = substr(md5($a->id.Str::random(5)),2,5);
-                $res = [
-                    'errno'=>'0',
-                    'msg'=>'登录成功',
-                    'data'=>[
-                        'token'=>$token,
-                        'id'=>$a->id
-                    ]
-                ];
-                $key = "login:ceshiapp:token:id".$a->id;
-                Redis::set($key,$token);
-                Redis::expire($key,604800);
-            }else{
-                $res = [
-                    'errno'=>'50010',
-                    'msg'=>'密码不正确'
-                ];
-            }
-        }else{
-            $res = [
-                'errno'=>'50002',
-                'msg'=>'用户不存在'
-            ];
-        }
-        die(json_encode($res,JSON_UNESCAPED_UNICODE));
-
+        $data = $request->input();
+        $method = 'aes-256-cbc';
+        $key = 'aaaa';
+        $option = OPENSSL_RAW_DATA;
+        $iv = '1809180918091809';
+        // 加密
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
+        $b64= base64_encode($encrypted);
+        $url = 'http://passport.1809.com/User/apploginadd';
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$b64);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //发起请求
+        curl_exec($ch);
+        //检查错误码
+        curl_errno($ch);
+        //释放资源
+        curl_close($ch);
     }
 
     public function user(){
         $id =$_GET['id'];
-        $a = User::where(['id'=>$id])->first();
-        $a=json_encode($a);
-        if($a){
-            $res = [
-                'errno'=>'0',
-                'msg'=>'OK',
-                'data'=>$a
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }else{
-            $res = [
-                'errno'=>'50006',
-                'msg'=>'数据异常',
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
-
+        $method = 'aes-256-cbc';
+        $key = 'aaaa';
+        $option = OPENSSL_RAW_DATA;
+        $iv = '1809180918091809';
+        // 加密
+        $data = json_encode($id,JSON_UNESCAPED_UNICODE);
+        $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
+        $b64= base64_encode($encrypted);
+        $url = 'http://passport.1809.com/User/user';
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$b64);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //发起请求
+        curl_exec($ch);
+        //检查错误码
+        curl_errno($ch);
+        //释放资源
+        curl_close($ch);
     }
 }
