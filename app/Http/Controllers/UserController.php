@@ -42,7 +42,7 @@ class UserController extends BaseController
         $data = json_encode($data,JSON_UNESCAPED_UNICODE);
         $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
         $b64= base64_encode($encrypted);
-        $url = 'http://passport.1809.com/User/appregadd';
+        $url = 'http://gxd.chenyys.com/User/appregadd';
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_POST,1);
@@ -66,7 +66,7 @@ class UserController extends BaseController
         $data = json_encode($data,JSON_UNESCAPED_UNICODE);
         $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
         $b64= base64_encode($encrypted);
-        $url = 'http://passport.1809.com/User/apploginadd';
+        $url = 'http://gxd.chenyys.com/User/apploginadd';
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_POST,1);
@@ -90,7 +90,7 @@ class UserController extends BaseController
         $data = json_encode($id,JSON_UNESCAPED_UNICODE);
         $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
         $b64= base64_encode($encrypted);
-        $url = 'http://passport.1809.com/User/user';
+        $url = 'http://gxd.chenyys.com/User/user';
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_POST,1);
