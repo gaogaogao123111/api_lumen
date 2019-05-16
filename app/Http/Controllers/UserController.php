@@ -81,13 +81,13 @@ class UserController extends BaseController
     }
 
     public function user(){
-        $id =$_GET['id'];
+        $data =$_GET;
         $method = 'aes-256-cbc';
         $key = 'aaaa';
         $option = OPENSSL_RAW_DATA;
         $iv = '1809180918091809';
         // 加密
-        $data = json_encode($id,JSON_UNESCAPED_UNICODE);
+        $data = json_encode($data,JSON_UNESCAPED_UNICODE);
         $encrypted = openssl_encrypt($data, $method, $key, $option, $iv);
         $b64= base64_encode($encrypted);
         $url = 'http://gxd.chenyys.com/User/user';
