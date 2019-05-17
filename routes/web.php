@@ -31,6 +31,19 @@ $router->post('/User/user',[
     'uses'=>'UserController@user',
     'middleware'=>'token'
 ]);
+$router->post('/User/goodslist','UserController@goodslist');
+$router->post('/User/goodsdetail','UserController@goodsdetail');
+$router->post('/User/goodscart','UserController@goodscart');
+$router->post('/User/cartlist','UserController@cartlist');
+$router->post('/User/cartadd','UserController@cartadd');
+$router->post('/User/orderlist','UserController@orderlist');
+
+
+
+
+
+
+
 
 $router->get('/Text/a','TextController@a');
 
